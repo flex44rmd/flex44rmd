@@ -109,16 +109,6 @@ local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "AimAssistESP_GUI"
 screenGui.Parent = PlayerGui
 
--- نص Make with Ramzy
-local label = Instance.new("TextLabel")
-label.Parent = screenGui
-label.Size = UDim2.new(0, 200, 0, 50)
-label.Position = UDim2.new(0.5, -100, 0.1, 0)
-label.Text = "Make with Ramzy"
-label.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-label.TextColor3 = Color3.fromRGB(255, 255, 255)
-label.TextScaled = true
-
 -- زر Aim Assist
 local aimButton = Instance.new("TextButton")
 aimButton.Parent = screenGui
@@ -162,6 +152,23 @@ end
 -- ربط الزر مع وظيفة التحديث
 refreshButton.MouseButton1Click:Connect(function()
     refreshESP()
+end)
+
+-- تشغيل Aim Assist باستخدام المفاتيح
+UserInputService.InputBegan:Connect(function(input, isProcessed)
+    if isProcessed then return end -- تجاهل الإدخالات عند استخدام GUI
+
+    -- تفعيل / إيقاف Aim Assist باستخدام زر **Ctrl**
+    if input.KeyCode == Enum.KeyCode.LeftControl or input.KeyCode == Enum.KeyCode.RightControl then
+        aimEnabled = not aimEnabled
+        aimButton.Text = aimEnabled and "Aim Assist: ON" or "Aim Assist: OFF"
+        aimCircle.Color = aimEnabled and Color3.fromRGB(255, 0, 0) or Color3.fromRGB(0, 255, 0)
+    end
+
+    -- تفعيل ESP باستخدام زر **Alt**
+    if input.KeyCode == Enum.KeyCode.LeftAlt or input.KeyCode == Enum.KeyCode.RightAlt then
+        refreshESP() -- تحديث الـ ESP عند الضغط على Alt
+    end
 end)
 
 -- إضافة ESP للاعبين الجدد
