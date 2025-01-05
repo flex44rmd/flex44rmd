@@ -157,7 +157,7 @@ end)
 -- تشغيل Aim Assist باستخدام المفاتيح
 UserInputService.InputBegan:Connect(function(input, isProcessed)
     if isProcessed then return end -- تجاهل الإدخالات عند استخدام GUI
-
+ 
     -- تفعيل / إيقاف Aim Assist باستخدام زر **Ctrl**
     if input.KeyCode == Enum.KeyCode.LeftControl or input.KeyCode == Enum.KeyCode.RightControl then
         aimEnabled = not aimEnabled
